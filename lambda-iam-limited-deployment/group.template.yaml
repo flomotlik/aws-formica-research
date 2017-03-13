@@ -1,0 +1,25 @@
+{% set departments = ['one', 'two'] %}
+
+Resources:
+{% for department in departments %}
+    Department{{ department | title }}LambdaDeploymentGroup:
+      Type: AWS::IAM::Group
+      Properties:
+        Path: "/deployment/lambda/{{department}}/"
+        Policies:
+        - PolicyName: "lambda-deployment-policy-{{department}}"
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - lambda:UpdateFunctionCode
+              Resource:
+                Fn::Join:
+                  - ''
+                  -  - 'arn:aws:lambda:'
+                     - Ref: AWS::Region
+                     - ':'
+                     - Ref: AWS::AccountId
+                     - :function:{{department}}-*
+{% endfor %}

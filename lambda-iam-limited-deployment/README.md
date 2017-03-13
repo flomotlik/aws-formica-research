@@ -1,0 +1,1 @@
+In this example I wanted to test if wildcards in IAM policies work as I expected and you can use them to effectively manage access for different orgs by limiting how organisations can name their functions for the lambda:UpdateFunctionCode action.
